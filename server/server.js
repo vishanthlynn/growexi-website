@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const connectDB = require('./config/db');
@@ -16,16 +18,21 @@ connectDB();
 // Security middleware
 app.use(helmet());
 
-// CORS configuration - allow multiple origins (env + localhost ports)
-const allowedOrigins = [
-  process.env.CLIENT_URL,
-  'http://localhost:3000',
-  'http://localhost:3001'
-].filter(Boolean);
+// CORS configuration - allow env origin and any localhost port
+const allowedOrigins = [process.env.CLIENT_URL].filter(Boolean);
+const isLocalhostOrigin = (origin) => {
+  try {
+    const url = new URL(origin);
+    return url.hostname === 'localhost';
+  } catch {
+    return false;
+  }
+};
 
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin) || isLocalhostOrigin(origin)) {
       return callback(null, true);
     }
     return callback(new Error('Not allowed by CORS'));
@@ -40,6 +47,14 @@ app.use(morgan('combined'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
+// Rate limit contact form submissions
+const inquiriesLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 50, // limit each IP to 50 requests per window
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
@@ -51,7 +66,7 @@ app.get('/health', (req, res) => {
 });
 
 // API routes
-app.use('/api/inquiries', inquiryRoutes);
+app.use('/api/inquiries', inquiriesLimiter, inquiryRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {
@@ -76,4 +91,25 @@ app.listen(PORT, () => {
   console.log(`🚀 GROWEXI Server running on port ${PORT}`);
   console.log(`📧 Email notifications: ${process.env.EMAIL_USER ? 'Configured' : 'Not configured'}`);
   console.log(`🗄️ Database: ${process.env.MONGO_URI ? 'Configured' : 'Not configured'}`);
+
+  // Verify email transporter if credentials are present
+  if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+
+    transporter.verify((error, success) => {
+      if (error) {
+        console.error('📧 Email transporter verification failed:', error.message);
+      } else {
+        console.log('📧 Email transporter is ready to send messages');
+      }
+    });
+  } else {
+    console.warn('📧 Email credentials not set; inquiry emails will be skipped.');
+  }
 });

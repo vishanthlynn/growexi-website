@@ -4,6 +4,30 @@ const { validationResult } = require('express-validator');
 
 // Create email transporter
 const createTransporter = () => {
+  // Prefer explicit SMTP host/port if provided; fall back to known service
+  if (process.env.SMTP_HOST) {
+    return nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT || 587),
+      secure: String(process.env.SMTP_SECURE || '').toLowerCase() === 'true' || Number(process.env.SMTP_PORT) === 465,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+  }
+
+  if (process.env.EMAIL_SERVICE) {
+    return nodemailer.createTransport({
+      service: process.env.EMAIL_SERVICE,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+  }
+
+  // Default to Gmail service for simplicity when nothing else provided
   return nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -146,27 +170,26 @@ const submitInquiry = async (req, res) => {
     // Save to database
     await inquiry.save();
 
-    // Send notification email to GROWEXI
-    const transporter = createTransporter();
-    
-    const notificationMailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_RECIPIENT,
-      subject: `New Inquiry from ${name} - ${serviceInterest}`,
-      html: createNotificationEmail(inquiry)
-    };
-
-    // Send confirmation email to user
-    const confirmationMailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: 'Thank You for Contacting GROWEXI Rwanda',
-      html: createConfirmationEmail(inquiry)
-    };
-
-    // Send both emails
-    await transporter.sendMail(notificationMailOptions);
-    await transporter.sendMail(confirmationMailOptions);
+    // Try to send emails, but do not fail the request if emailing fails
+    try {
+      const transporter = createTransporter();
+      const notificationMailOptions = {
+        from: process.env.EMAIL_USER,
+        to: process.env.EMAIL_RECIPIENT,
+        subject: `New Inquiry from ${name} - ${serviceInterest}`,
+        html: createNotificationEmail(inquiry)
+      };
+      const confirmationMailOptions = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: 'Thank You for Contacting GROWEXI Rwanda',
+        html: createConfirmationEmail(inquiry)
+      };
+      await transporter.sendMail(notificationMailOptions);
+      await transporter.sendMail(confirmationMailOptions);
+    } catch (emailError) {
+      console.error('Email send failed:', emailError.message);
+    }
 
     res.status(201).json({
       success: true,
