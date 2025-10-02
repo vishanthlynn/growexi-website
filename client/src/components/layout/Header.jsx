@@ -46,22 +46,6 @@ const Header = () => {
                 GROWEXI
               </h1>
               <p className="text-xs text-neutral-600 -mt-1">Rwanda</p>
-              {token && user ? (
-                <>
-                  <span className="text-neutral-700 px-3 py-2 text-sm font-medium">
-                    Welcome, {user.name}
-                  </span>
-                  {user.role === 'admin' && (
-                    <Link to="/admin/dashboard" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Dashboard</Link>
-                  )}
-                  <button onClick={logout} className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Logout</button>
-                </>
-              ) : (
-                <>
-                  <Link to="/login" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Login</Link>
-                  <Link to="/signup" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Sign Up</Link>
-                </>
-              )}
             </div>
           </div>
 
@@ -95,14 +79,28 @@ const Header = () => {
             </div>
           </div>
 
-          {/* CTA Button */}
+          {/* Right Controls */}
           <div className="hidden md:block">
-            <button
-              onClick={() => scrollToSection('services')}
-              className="btn-primary"
-            >
-              Join a Program
-            </button>
+            {token && user ? (
+              <div className="flex items-center gap-4">
+                <span className="text-neutral-800 text-sm">Welcome, <span className="font-semibold">{user.name}</span></span>
+                {user.role === 'admin' && (
+                  <Link to="/admin/dashboard" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Dashboard</Link>
+                )}
+                <button onClick={logout} className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Logout</button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-4">
+                <Link to="/login" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Login</Link>
+                <Link to="/signup" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Sign Up</Link>
+                <button
+                  onClick={() => scrollToSection('services')}
+                  className="btn-primary"
+                >
+                  Join a Program
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Mobile menu button */}
