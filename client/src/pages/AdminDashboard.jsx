@@ -87,6 +87,7 @@ export default function AdminDashboard() {
 
   const onLogout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('user')
     window.location.href = '/'
   }
 
