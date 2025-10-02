@@ -36,6 +36,9 @@ export default function AnnouncementsSection() {
             <p className="text-neutral-600">No announcements yet.</p>
           )}
         </div>
+        <div className="mt-6">
+          <a href="/announcements" className="btn-primary">View All Announcements</a>
+        </div>
       </div>
     </section>
   )

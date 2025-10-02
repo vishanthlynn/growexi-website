@@ -5,13 +5,15 @@ const {
   getAnnouncements,
   createAnnouncement,
   updateAnnouncement,
-  deleteAnnouncement
+  deleteAnnouncement,
+  getMarquee
 } = require('../../controllers/announcementController');
 
 const router = express.Router();
 
 // Public
 router.get('/', getAnnouncements);
+router.get('/marquee', getMarquee);
 
 // Protected
 router.post('/', auth, [

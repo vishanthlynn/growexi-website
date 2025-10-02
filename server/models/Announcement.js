@@ -13,6 +13,10 @@ const announcementSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  isMarquee: {
+    type: Boolean,
+    default: false
+  },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

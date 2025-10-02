@@ -9,6 +9,7 @@ export default function AdminDashboard() {
   const [content, setContent] = useState('')
   const [editingId, setEditingId] = useState('')
   const [error, setError] = useState('')
+  const [marqueeText, setMarqueeText] = useState('')
 
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
@@ -43,6 +44,24 @@ export default function AdminDashboard() {
       setContent('')
       setEditingId('')
       await load()
+    } catch (e) {
+      setError(e.message)
+    }
+  }
+
+  const pushMarquee = async () => {
+    if (!marqueeText.trim()) return
+    try {
+      const res = await fetch(`${API_BASE}/api/announcements`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({ title: 'Marquee', content: marqueeText, isMarquee: true })
+      })
+      const json = await res.json()
+      if (!json.success) throw new Error(json.message || 'Failed to push marquee')
+      setMarqueeText('')
+      await load()
+      alert('Marquee updated on the site')
     } catch (e) {
       setError(e.message)
     }
@@ -87,6 +106,16 @@ export default function AdminDashboard() {
           </header>
 
           {error && <div className="message-error mb-4">{error}</div>}
+
+          <section className="mb-8">
+            <div className="p-4 border rounded-lg">
+              <h2 className="text-lg font-semibold mb-3">Priority Announcement (Marquee)</h2>
+              <div className="flex gap-2">
+                <input className="input-field w-full" placeholder="Type marquee text..." value={marqueeText} onChange={e => setMarqueeText(e.target.value)} />
+                <button className="btn-primary" type="button" onClick={pushMarquee}>Push Live</button>
+              </div>
+            </div>
+          </section>
 
           <section className="mb-8">
             <h2 className="text-lg font-semibold mb-3">Manage Announcements</h2>
