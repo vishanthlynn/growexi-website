@@ -23,7 +23,13 @@ export default function LoginPage() {
       const json = await res.json()
       if (!json.success) throw new Error(json.message || 'Login failed')
       localStorage.setItem('token', json.token)
-      navigate('/admin/dashboard')
+      localStorage.setItem('userRole', json.user.role)
+      // Redirect based on role
+      if (json.user.role === 'admin') {
+        navigate('/admin/dashboard')
+      } else {
+        navigate('/announcements')
+      }
     } catch (e) {
       setError(e.message)
     } finally {

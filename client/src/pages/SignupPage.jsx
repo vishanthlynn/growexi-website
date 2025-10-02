@@ -24,7 +24,9 @@ export default function SignupPage() {
       const json = await res.json()
       if (!json.success) throw new Error(json.message || 'Signup failed')
       localStorage.setItem('token', json.token)
-      navigate('/admin/dashboard')
+      localStorage.setItem('userRole', json.user.role)
+      // Customers go to announcements page after signup
+      navigate('/announcements')
     } catch (e) {
       setError(e.message)
     } finally {

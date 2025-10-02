@@ -24,9 +24,11 @@ const Header = () => {
 
   const navigate = useNavigate()
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+  const userRole = typeof window !== 'undefined' ? localStorage.getItem('userRole') : null
 
   const logout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('userRole')
     navigate('/')
   }
 
@@ -45,7 +47,11 @@ const Header = () => {
               <p className="text-xs text-neutral-600 -mt-1">Rwanda</p>
               {token ? (
                 <>
-                  <Link to="/admin/dashboard" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Dashboard</Link>
+                  {userRole === 'admin' ? (
+                    <Link to="/admin/dashboard" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Dashboard</Link>
+                  ) : (
+                    <Link to="/announcements" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Announcements</Link>
+                  )}
                   <button onClick={logout} className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Logout</button>
                 </>
               ) : (
