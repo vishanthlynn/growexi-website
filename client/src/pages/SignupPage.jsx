@@ -35,30 +35,80 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-        <div className="text-center mb-6">
-          <div className="text-2xl font-bold gradient-text">GROWEXI</div>
+    <div className="min-h-screen w-full font-[Inter,sans-serif] flex">
+      {/* Left Decorative Panel */}
+      <div
+        className="hidden md:flex md:basis-2/5 items-center justify-center relative"
+        style={{ backgroundColor: '#003366' }}
+      >
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: "url('/src/assets/imigongo-pattern.svg')",
+            backgroundRepeat: 'repeat',
+            backgroundSize: '400px 400px'
+          }}
+        />
+        <div className="relative z-10 text-center px-8">
+          <div className="text-3xl font-extrabold text-white tracking-wide">GROWEXI</div>
+          <div className="text-white/80 mt-2 max-w-md mx-auto">
+            Building Rwanda's Future-Ready Workforce
+          </div>
         </div>
-        <h2 className="text-xl font-semibold mb-4 text-center">Create an Admin Account</h2>
-        {error && <div className="message-error mb-4">{error}</div>}
-        <form onSubmit={onSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm mb-1">Full Name</label>
-            <input className="input-field w-full" type="text" value={name} onChange={e => setName(e.target.value)} required />
+      </div>
+
+      {/* Right Form Panel */}
+      <div className="basis-full md:basis-3/5 bg-gray-50 flex items-center justify-center p-6">
+        <div className="w-full max-w-lg">
+          <h1 className="text-3xl font-bold text-neutral-900 mb-8 text-center">Create Your Account</h1>
+          {error && <div className="message-error mb-4">{error}</div>}
+
+          <form onSubmit={onSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-neutral-800 mb-2">Full Name</label>
+              <input
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#003366] focus:border-[#003366] bg-white"
+                type="text"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-neutral-800 mb-2">Email Address</label>
+              <input
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#003366] focus:border-[#003366] bg-white"
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-neutral-800 mb-2">Password</label>
+              <input
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#003366] focus:border-[#003366] bg-white"
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <button
+              className="w-full rounded-lg text-white py-3 transition shadow-sm hover:shadow-lg"
+              style={{ backgroundColor: '#003366' }}
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? 'Creating...' : 'Create Account'}
+            </button>
+          </form>
+
+          <div className="text-center mt-6 text-sm text-neutral-700">
+            Already have an account?{' '}
+            <Link to="/login" className="text-[#003366] underline">Login</Link>
           </div>
-          <div>
-            <label className="block text-sm mb-1">Email Address</label>
-            <input className="input-field w-full" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
-          </div>
-          <div>
-            <label className="block text-sm mb-1">Password</label>
-            <input className="input-field w-full" type="password" value={password} onChange={e => setPassword(e.target.value)} required />
-          </div>
-          <button className="btn-primary w-full" type="submit" disabled={loading}>{loading ? 'Signing up...' : 'Sign Up'}</button>
-        </form>
-        <div className="text-center mt-4 text-sm">
-          Already have an account? <Link to="/login" className="text-primary-600">Login</Link>
         </div>
       </div>
     </div>
