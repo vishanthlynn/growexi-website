@@ -8,6 +8,8 @@ require('dotenv').config();
 
 const connectDB = require('./config/db');
 const inquiryRoutes = require('./routes/api/inquiries');
+const authRoutes = require('./routes/api/auth');
+const announcementRoutes = require('./routes/api/announcements');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -67,6 +69,8 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api/inquiries', inquiriesLimiter, inquiryRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/announcements', announcementRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -21,6 +22,14 @@ const Header = () => {
     setIsMenuOpen(false)
   }
 
+  const navigate = useNavigate()
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+
+  const logout = () => {
+    localStorage.removeItem('token')
+    navigate('/')
+  }
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'
@@ -34,6 +43,17 @@ const Header = () => {
                 GROWEXI
               </h1>
               <p className="text-xs text-neutral-600 -mt-1">Rwanda</p>
+              {token ? (
+                <>
+                  <Link to="/admin/dashboard" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Dashboard</Link>
+                  <button onClick={logout} className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Logout</button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Login</Link>
+                  <Link to="/signup" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Sign Up</Link>
+                </>
+              )}
             </div>
           </div>
 
