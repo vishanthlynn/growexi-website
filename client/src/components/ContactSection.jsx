@@ -112,7 +112,7 @@ const ContactSection = () => {
     {
       icon: '📍',
       title: 'Address',
-      value: 'Kigali Innovation City, Kigali, Rwanda',
+      value: 'Norrsken House Kigali, Kigali, Rwanda',
       link: null
     }
   ]

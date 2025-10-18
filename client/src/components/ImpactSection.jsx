@@ -5,7 +5,7 @@ const ImpactSection = () => {
     {
       name: 'Marie Uwimana',
       role: 'Data Analyst',
-      company: 'Bank of Kigali',
+      company: 'Financial Services',
       image: '👩‍💼',
       quote: 'The data analysis training at GROWEXI transformed my career. I went from basic Excel skills to advanced Python programming in just 6 months.',
       service: 'Data Analysis & Digital Tools'
@@ -21,7 +21,7 @@ const ImpactSection = () => {
     {
       name: 'Grace Mukamana',
       role: 'Research Coordinator',
-      company: 'University of Rwanda',
+      company: 'Academic Institution',
       image: '👩‍🔬',
       quote: 'The research methodology training helped me complete my PhD thesis successfully. The quality of instruction was exceptional.',
       service: 'Research & Methodology'
@@ -29,7 +29,7 @@ const ImpactSection = () => {
     {
       name: 'David Rukundo',
       role: 'Public Relations Manager',
-      company: 'Rwanda Development Board',
+      company: 'Government Agency',
       image: '👨‍💼',
       quote: 'The professional development program improved my presentation skills dramatically. I now confidently lead board meetings.',
       service: 'Professional Development'

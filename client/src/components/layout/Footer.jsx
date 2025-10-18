@@ -124,7 +124,7 @@ const Footer = () => {
                 <div>
                   <p className="text-sm text-neutral-300 mb-1">Address</p>
                   <p className="text-neutral-300 text-sm">
-                    Kigali Innovation City<br />
+                    Norrsken House Kigali<br />
                     Kigali, Rwanda
                   </p>
                 </div>
@@ -156,7 +156,8 @@ const Footer = () => {
         <div className="border-t border-neutral-800 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-sm text-neutral-400 mb-4 md:mb-0">
-              © {new Date().getFullYear()} GROWEXI Rwanda. All rights reserved.
+              © {new Date().getFullYear()} GROWEXI Rwanda. All rights reserved.<br />
+              <span className="text-xs text-neutral-500">Designed and developed by Vishanth Dandu GROWEXI</span>
             </div>
             
             <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6">

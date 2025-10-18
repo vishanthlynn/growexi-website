@@ -17,7 +17,7 @@ export default function AnnouncementsSection() {
         setError(e.message)
       }
     })()
-  }, [])
+  }, [])//
 
   return (
     <section className="section-padding bg-neutral-50">
