@@ -19,13 +19,16 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('adminToken')
     if (token) {
-      // Verify token with backend
+      // Set axios default header
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
       setIsAuthenticated(true)
       const userData = localStorage.getItem('adminUser')
       if (userData) {
         setUser(JSON.parse(userData))
       }
+    } else {
+      // Clear axios default header if no token
+      delete axios.defaults.headers.common['Authorization']
     }
     setLoading(false)
   }, [])

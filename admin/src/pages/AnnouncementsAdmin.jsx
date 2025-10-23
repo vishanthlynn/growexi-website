@@ -38,6 +38,11 @@ const AnnouncementsAdmin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
+      // Debug: Check if we have auth token
+      const token = localStorage.getItem('adminToken')
+      console.log('Auth token:', token ? 'Present' : 'Missing')
+      console.log('Axios headers:', axios.defaults.headers.common)
+      
       if (editingAnnouncement) {
         await axios.put(`${import.meta.env.VITE_API_URL}/api/announcements/${editingAnnouncement._id}`, formData)
       } else {
@@ -54,7 +59,8 @@ const AnnouncementsAdmin = () => {
       fetchAnnouncements()
     } catch (error) {
       console.error('Error saving announcement:', error)
-      alert('Error: Unable to connect to the backend API. Please ensure the server is running and accessible.')
+      console.error('Error response:', error.response?.data)
+      alert(`Error: ${error.response?.data?.message || 'Unable to connect to the backend API. Please ensure the server is running and accessible.'}`)
     }
   }
 
