@@ -22,8 +22,12 @@ connectDB();
 // Security middleware
 app.use(helmet());
 
-// CORS configuration - allow env origin and any localhost port
-const allowedOrigins = [process.env.CLIENT_URL].filter(Boolean);
+// CORS configuration - allow env origin, localhost, and production domains
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'https://growexi.org',
+  'https://admin.growexi.org'
+].filter(Boolean);
 const isLocalhostOrigin = (origin) => {
   try {
     const url = new URL(origin);
