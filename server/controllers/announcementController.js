@@ -6,6 +6,7 @@ exports.getAnnouncements = async (req, res) => {
     const items = await Announcement.find().sort({ createdAt: -1 });
     return res.json({ success: true, data: items });
   } catch (e) {
+    console.error('Error in getAnnouncements:', e);
     return res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
