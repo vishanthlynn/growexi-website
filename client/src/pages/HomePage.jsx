@@ -13,12 +13,18 @@ const HomePage = () => {
     <div className="min-h-screen bg-white">
       <Header />
       <main>
-        <HeroSection />
-        <AboutSection />
+        <div id="home">
+          <HeroSection />
+        </div>
+        <div id="about">
+          <AboutSection />
+        </div>
         <ServicesSection />
         <ImpactSection />
         <AnnouncementsSection />
-        <ContactSection />
+        <div id="contact">
+          <ContactSection />
+        </div>
       </main>
       <Footer />
     </div>

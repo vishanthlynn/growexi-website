@@ -15,9 +15,14 @@ const Header = () => {
   }, [])
 
   const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+    if (sectionId === 'home') {
+      // Special handling for home - scroll to top of page
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      const element = document.getElementById(sectionId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
     }
     setIsMenuOpen(false)
   }
@@ -32,12 +37,15 @@ const Header = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="flex-shrink-0">
+            <button 
+              onClick={() => scrollToSection('home')}
+              className="flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity duration-300"
+            >
               <h1 className="text-2xl font-bold gradient-text">
                 GROWEXI
               </h1>
               <p className="text-xs text-neutral-600 -mt-1">Rwanda</p>
-            </div>
+            </button>
           </div>
 
           {/* Desktop Navigation */}

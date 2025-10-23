@@ -105,7 +105,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`🚀 GROWEXI Server running on port ${PORT}`);
   console.log(`📧 Email notifications: ${process.env.EMAIL_USER ? 'Configured' : 'Not configured'}`);
-  console.log(`🗄️ Database: ${process.env.MONGO_URI ? 'Configured' : 'Not configured'}`);
+  console.log(`🗄️ Database: ${process.env.MONGODB_URI ? 'Configured' : 'Not configured'}`);
 
   // Verify email transporter if credentials are present
   if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {

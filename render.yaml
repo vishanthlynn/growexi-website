@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: growexi-api
+    env: node
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        fromDatabase:
+          name: growexi-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        value: https://growexi.org
+      - key: EMAIL_USER
+        value: your-email@gmail.com
+      - key: EMAIL_PASS
+        value: your-app-password
+      - key: EMAIL_FROM
+        value: your-email@gmail.com
+
+databases:
+  - name: growexi-db
+    plan: free
+    databaseName: growexi

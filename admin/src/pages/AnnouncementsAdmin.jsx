@@ -37,10 +37,23 @@ const AnnouncementsAdmin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    
+    // Validate form data
+    if (!formData.title.trim() || formData.title.trim().length < 3) {
+      alert('Title must be at least 3 characters long')
+      return
+    }
+    
+    if (!formData.content.trim() || formData.content.trim().length < 3) {
+      alert('Content must be at least 3 characters long')
+      return
+    }
+    
     try {
       // Debug: Check if we have auth token
       const token = localStorage.getItem('adminToken')
       console.log('Auth token:', token ? 'Present' : 'Missing')
+      console.log('Form data being sent:', formData)
       console.log('Axios headers:', axios.defaults.headers.common)
       
       if (editingAnnouncement) {
@@ -57,6 +70,7 @@ const AnnouncementsAdmin = () => {
         isMarquee: false
       })
       fetchAnnouncements()
+      alert('Announcement saved successfully!')
     } catch (error) {
       console.error('Error saving announcement:', error)
       console.error('Error response:', error.response?.data)
