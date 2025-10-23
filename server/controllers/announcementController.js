@@ -3,7 +3,7 @@ const Announcement = require('../models/Announcement');
 
 exports.getAnnouncements = async (req, res) => {
   try {
-    const items = await Announcement.find().sort({ createdAt: -1 }).populate('author', 'name email');
+    const items = await Announcement.find().sort({ createdAt: -1 });
     return res.json({ success: true, data: items });
   } catch (e) {
     return res.status(500).json({ success: false, message: 'Internal server error' });
@@ -20,7 +20,7 @@ exports.createAnnouncement = async (req, res) => {
     if (isMarquee) {
       await Announcement.updateMany({ isMarquee: true }, { $set: { isMarquee: false } });
     }
-    const doc = await Announcement.create({ title, content, isMarquee: !!isMarquee, author: req.user._id });
+    const doc = await Announcement.create({ title, content, isMarquee: !!isMarquee });
     return res.status(201).json({ success: true, data: doc });
   } catch (e) {
     return res.status(500).json({ success: false, message: 'Internal server error' });
