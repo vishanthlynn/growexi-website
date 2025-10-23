@@ -8,7 +8,7 @@
     "server": "cd server && npm run dev",
     "client": "cd client && npm run dev",
     "admin": "cd admin && npm run dev",
-    "build": "cd client && npm run build && cd ../admin && npm run build",
+    "build": "echo 'Use individual project build commands'",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install && cd ../admin && npm install",
     "start": "cd server && npm start"
   },
