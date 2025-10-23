@@ -27,7 +27,7 @@ const allowedOrigins = [process.env.CLIENT_URL].filter(Boolean);
 const isLocalhostOrigin = (origin) => {
   try {
     const url = new URL(origin);
-    return url.hostname === 'localhost';
+    return url.hostname === 'localhost' || url.hostname === '127.0.0.1';
   } catch {
     return false;
   }
@@ -35,10 +35,13 @@ const isLocalhostOrigin = (origin) => {
 
 app.use(cors({
   origin: function(origin, callback) {
+    console.log('CORS request from origin:', origin);
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin) || isLocalhostOrigin(origin)) {
+      console.log('CORS allowed for origin:', origin);
       return callback(null, true);
     }
+    console.log('CORS blocked for origin:', origin);
     return callback(new Error('Not allowed by CORS'));
   },
   credentials: true
