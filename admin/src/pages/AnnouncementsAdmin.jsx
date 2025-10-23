@@ -54,6 +54,7 @@ const AnnouncementsAdmin = () => {
       fetchAnnouncements()
     } catch (error) {
       console.error('Error saving announcement:', error)
+      alert('Error: Unable to connect to the backend API. Please ensure the server is running and accessible.')
     }
   }
 
