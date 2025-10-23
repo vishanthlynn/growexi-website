@@ -2,6 +2,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "installCommand": "npm install",
+  "framework": "vite",
   "routes": [
     {
       "src": "/assets/(.*)",
@@ -11,6 +12,5 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ],
-  "version": 2
+  ]
 }
