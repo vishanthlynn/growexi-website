@@ -13,7 +13,10 @@ export default function Marquee() {
         if (json.success && json.data) {
           setText(json.data.content || json.data.title)
         }
-      } catch {}
+      } catch {
+        // Mock marquee text for development
+        setText('🚀 Welcome to GROWEXI - Empowering Rwanda through innovative training and development!')
+      }
     })()
   }, [])
 

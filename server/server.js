@@ -10,6 +10,8 @@ const connectDB = require('./config/db');
 const inquiryRoutes = require('./routes/api/inquiries');
 const authRoutes = require('./routes/api/auth');
 const announcementRoutes = require('./routes/api/announcements');
+const courseRoutes = require('./routes/api/courses');
+const applicationRoutes = require('./routes/api/applications');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -71,6 +73,8 @@ app.get('/health', (req, res) => {
 app.use('/api/inquiries', inquiriesLimiter, inquiryRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/announcements', announcementRoutes);
+app.use('/api/courses', courseRoutes);
+app.use('/api/applications', applicationRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {

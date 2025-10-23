@@ -22,11 +22,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 6
   },
-  role: {
-    type: String,
-    enum: ['admin', 'customer'],
-    default: 'customer'
-  },
+  // No role field needed - all users are admins
   createdAt: {
     type: Date,
     default: Date.now

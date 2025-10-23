@@ -34,3 +34,4 @@ client/.vite/
 # Misc
 coverage/
 *.local
+.vercel

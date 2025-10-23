@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 const User = require('../models/User');
 
 function signToken(user) {
-  return jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
+  return jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
 }
 
 exports.registerUser = async (req, res) => {
@@ -19,7 +19,7 @@ exports.registerUser = async (req, res) => {
     }
     const user = await User.create({ name, email, password });
     const token = signToken(user);
-    return res.status(201).json({ success: true, token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
+    return res.status(201).json({ success: true, token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (e) {
     return res.status(500).json({ success: false, message: 'Internal server error' });
   }
@@ -41,7 +41,7 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
     const token = signToken(user);
-    return res.json({ success: true, token, user: { id: user._id, name: user.name, email: user.email, role: user.role } });
+    return res.json({ success: true, token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (e) {
     return res.status(500).json({ success: false, message: 'Internal server error' });
   }

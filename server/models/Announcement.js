@@ -17,11 +17,7 @@ const announcementSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
+  // No author field needed for public announcements
   createdAt: {
     type: Date,
     default: Date.now
