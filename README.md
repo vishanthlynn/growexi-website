@@ -1,52 +1,22 @@
-# GROWEXI Rwanda Website
+# GROWEXI - Complete MERN Application
 
-A transformative learning and innovation hub website committed to equipping Rwandans with future-ready skills across multiple sectors.
+A comprehensive MERN stack application for GROWEXI Rwanda, featuring a public client website, private admin portal, and backend API for course management and application handling.
 
-## 🚀 Project Overview
+## 🏗️ Architecture
 
-GROWEXI (Growing Rwanda's Opportunities & Workforce Expertise and Innovation) is a dynamic training and innovation company designed to bridge Rwanda's workforce readiness gap across multiple sectors. This website serves as the digital platform to showcase our services, connect with learners, and build strategic partnerships.
+This application consists of three separate projects:
 
-### Vision
-To become Rwanda's leading center for lifelong learning and professional growth.
+1. **Backend API** (`/server`) - Node.js/Express API with MongoDB
+2. **Public Client Website** (`/client`) - React frontend for public users
+3. **Admin Portal** (`/admin`) - React frontend for administrators
 
-### Mission
-To empower 5,000 learners in 5 years through accessible, relevant, and high-impact training.
-
-## 🛠️ Technology Stack
-
-- **Frontend:** React 18+ with Vite
-- **Styling:** Tailwind CSS with custom Rwandan-inspired design
-- **Backend:** Node.js with Express.js
-- **Database:** MongoDB with Mongoose
-- **Email Service:** Nodemailer with Gmail SMTP
-- **Deployment:** Heroku (backend) + Netlify (frontend)
-
-## 📁 Project Structure
-
-```
-growexi-website/
-├── client/                 # React frontend application
-│   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   ├── pages/         # Page components
-│   │   └── assets/        # Static assets
-│   └── public/            # Public assets
-├── server/                # Node.js backend API
-│   ├── config/           # Database configuration
-│   ├── controllers/      # Route controllers
-│   ├── models/           # Database models
-│   └── routes/           # API routes
-└── README.md             # Project documentation
-```
-
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
-- npm (v8 or higher)
-- MongoDB Atlas account (for database)
-- Gmail account (for email service)
+- Node.js (>=16.0.0)
+- MongoDB (local or cloud)
+- npm or yarn
 
 ### Installation
 
@@ -56,107 +26,236 @@ growexi-website/
    cd growexi-website
    ```
 
-2. **Install dependencies**
+2. **Install all dependencies**
    ```bash
    npm run install-all
    ```
 
 3. **Set up environment variables**
    
-   Create a `.env` file in the `server/` directory:
-   ```env
-   MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/growexi
-   EMAIL_USER=your-email@gmail.com
-   EMAIL_PASS=your-app-password
-   EMAIL_RECIPIENT=info@growexi.rw
-   NODE_ENV=development
-   PORT=5000
-   ```
-
-4. **Start the development server**
+   Copy the example environment files and configure them:
    ```bash
-   npm run dev
+   # Server environment
+   cp server/env.example server/.env
+   
+   # Client environment  
+   cp client/env.example client/.env
+   
+   # Admin environment
+   cp admin/env.example admin/.env
    ```
 
-   This will start both the frontend (http://localhost:3000) and backend (http://localhost:5000) servers.
+4. **Configure your environment variables**
+   
+   Edit `server/.env`:
+   ```env
+   NODE_ENV=development
+   PORT=5001
+   MONGO_URI=mongodb://localhost:27017/growexi
+   JWT_SECRET=your_jwt_secret_here
+   EMAIL_USER=your_email@gmail.com
+   EMAIL_PASS=your_app_password
+   CLIENT_URL=http://localhost:3000
+   ```
 
-## 🎨 Design System
+   Edit `client/.env` and `admin/.env`:
+   ```env
+   VITE_API_URL=http://localhost:5001
+   ```
 
-### Color Palette (Rwandan-Inspired)
-- **Primary Blue:** #1E3A8A (Peace and stability)
-- **Secondary Green:** #059669 (Hope and prosperity)
-- **Accent Yellow:** #F59E0B (Economic development)
-- **Neutral Gray:** #6B7280 (Professional foundation)
+5. **Start the development servers**
+   ```bash
+   # Start all servers concurrently
+   npm run dev
+   
+   # Or start individually:
+   npm run server    # Backend API (port 5001)
+   npm run client    # Public website (port 3000)
+   cd admin && npm run dev  # Admin portal (port 3001)
+   ```
 
-### Typography
-- **Primary Font:** Inter (modern, professional)
-- **Headings:** Bold, clear hierarchy
-- **Body Text:** Readable, accessible contrast
+## 📁 Project Structure
 
-## 📋 Features
+```
+growexi-website/
+├── server/                 # Backend API
+│   ├── config/            # Database configuration
+│   ├── controllers/       # Route controllers
+│   ├── middleware/        # Authentication middleware
+│   ├── models/           # MongoDB models
+│   ├── routes/           # API routes
+│   └── server.js         # Main server file
+├── client/               # Public website
+│   ├── src/
+│   │   ├── components/   # React components
+│   │   ├── pages/        # Page components
+│   │   └── App.jsx       # Main app component
+│   └── package.json
+├── admin/                # Admin portal
+│   ├── src/
+│   │   ├── components/   # React components
+│   │   ├── pages/        # Admin pages
+│   │   └── utils/        # Auth context
+│   └── package.json
+└── package.json          # Root package.json
+```
 
-### Frontend Features
-- Responsive design for all devices
-- Rwandan-inspired visual design
-- Interactive contact form
-- Service showcase with enrollment links
-- Success stories and testimonials
-- Professional company information
+## 🔧 Features
 
-### Backend Features
-- RESTful API endpoints
-- MongoDB integration
-- Email notification system
-- Form validation and error handling
-- CORS configuration
-- Environment-based configuration
+### Backend API Features
+- **Authentication**: JWT-based admin authentication
+- **Models**: User, Course, Application, Announcement
+- **Email Notifications**: Automatic emails for accepted applications
+- **Security**: Rate limiting, CORS, input validation
+- **Public/Protected Routes**: Separate endpoints for public and admin access
 
-## 🔧 Available Scripts
+### Public Website Features
+- **Course Browsing**: View all available courses
+- **Course Details**: Detailed course information
+- **Application System**: Apply for courses without registration
+- **Announcements**: Display site announcements and marquee
+- **Responsive Design**: Mobile-friendly interface
 
-- `npm run dev` - Start both frontend and backend in development mode
-- `npm run client` - Start only the frontend development server
-- `npm run server` - Start only the backend development server
-- `npm run build` - Build the frontend for production
-- `npm start` - Start the production server
+### Admin Portal Features
+- **Dashboard**: Overview of courses and applications
+- **Course Management**: Full CRUD operations for courses
+- **Application Management**: Review and update application status
+- **Announcement Management**: Create and manage site announcements
+- **Email Integration**: Automatic notifications for accepted applications
 
-## 🌐 Deployment
+## 🗄️ Database Models
 
-### Backend (Heroku)
-1. Create a Heroku app
-2. Set environment variables in Heroku dashboard
-3. Deploy using Git
+### User Model
+- `name`: Admin's full name
+- `email`: Unique email address
+- `password`: Hashed password
+- `createdAt`: Account creation date
 
-### Frontend (Netlify)
-1. Connect GitHub repository to Netlify
-2. Set build settings:
-   - Build command: `npm run build`
-   - Publish directory: `client/dist`
-3. Set environment variables for API URL
+### Course Model
+- `title`: Course title
+- `subtitle`: Course subtitle
+- `description`: Detailed description
+- `whatYoullLearn`: Array of learning outcomes
+- `whoCanJoin`: Array of target audience
+- `outcome`: Expected outcome
+- `isActive`: Course availability status
+- `courseMaterialsLink`: Private link to course materials
 
-## 📞 Contact
+### Application Model
+- `course`: Reference to Course model
+- `applicantName`: Applicant's full name
+- `applicantEmail`: Applicant's email
+- `reasonForApplying`: Application reason
+- `status`: Pending/Accepted/Rejected
+- `createdAt`: Application date
 
-- **Email:** info@growexi.rw
-- **Phone:** +250 781184517
-- **Address:** Kigali Innovation City, Kigali, Rwanda
+### Announcement Model
+- `title`: Announcement title
+- `content`: Announcement content
+- `isMarquee`: Display as homepage marquee
+- `createdAt`: Creation date
+
+## 🔐 Authentication
+
+- **Admin Access Only**: No public registration
+- **JWT Tokens**: Secure authentication
+- **Manual Admin Creation**: Admins created directly in database
+- **Protected Routes**: Admin-only endpoints
+
+## 📧 Email Notifications
+
+When an application status is updated to "Accepted":
+1. System retrieves course details
+2. Sends email to applicant with course materials link
+3. Email includes course title and access instructions
+4. Graceful error handling for email failures
+
+## 🚀 Deployment
+
+### Environment Setup
+1. Set up MongoDB (local or cloud)
+2. Configure email service (Gmail recommended)
+3. Set production environment variables
+4. Update CORS settings for production domains
+
+### Build Commands
+```bash
+# Build client website
+npm run build
+
+# Start production server
+npm start
+```
+
+## 🛠️ Development
+
+### Available Scripts
+
+**Root Level:**
+- `npm run dev` - Start all development servers
+- `npm run server` - Start backend API only
+- `npm run client` - Start public website only
+- `npm run install-all` - Install all dependencies
+
+**Individual Projects:**
+- `npm run dev` - Development server
+- `npm run build` - Production build
+- `npm start` - Production server
+
+### API Endpoints
+
+**Public Endpoints:**
+- `GET /api/courses` - Get all active courses
+- `GET /api/courses/:id` - Get single course
+- `POST /api/applications` - Submit application
+- `GET /api/announcements` - Get announcements
+
+**Admin Endpoints:**
+- `POST /api/auth/login` - Admin login
+- `GET /api/courses/admin/all` - Get all courses (with sensitive data)
+- `POST /api/courses/admin` - Create course
+- `PUT /api/courses/admin/:id` - Update course
+- `DELETE /api/courses/admin/:id` - Delete course
+- `GET /api/applications/admin/all` - Get all applications
+- `PUT /api/applications/admin/:id/status` - Update application status
+- `DELETE /api/applications/admin/:id` - Delete application
+
+## 🔒 Security Features
+
+- **Input Validation**: Express-validator for all inputs
+- **Rate Limiting**: Prevents abuse of contact forms
+- **CORS Protection**: Configured for specific origins
+- **Helmet**: Security headers
+- **Password Hashing**: bcryptjs for secure passwords
+- **JWT Tokens**: Secure authentication
+
+## 📱 Responsive Design
+
+All three applications are fully responsive and mobile-friendly:
+- Mobile-first design approach
+- Touch-friendly interfaces
+- Optimized for all screen sizes
+- Modern UI/UX patterns
 
 ## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Submit a pull request
+4. Test thoroughly
+5. Submit a pull request
 
 ## 📄 License
 
 This project is licensed under the MIT License.
 
-## 🙏 Acknowledgments
+## 🆘 Support
 
-- Inspired by Rwanda's Vision 2050
-- Built with modern web technologies
-- Designed with Rwandan cultural elements
-- Committed to inclusive and accessible design
+For support and questions:
+- Email: info@growexi.rw
+- Phone: +250 781184517
+- Address: Norrsken House Kigali, Kigali, Rwanda
 
 ---
 
-**GROWEXI Rwanda** - Empowering 5,000 learners in 5 years through accessible, relevant, and high-impact training.
+**GROWEXI Rwanda** - Growing Rwanda's Opportunities & Workforce Expertise and Innovation

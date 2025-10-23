@@ -1,229 +1,163 @@
-# GROWEXI Website Deployment Guide
+# GROWEXI Deployment Guide
 
-## 🚀 Quick Start
+This guide will help you deploy all three GROWEXI projects to production.
 
-### Prerequisites
-- Node.js (v16 or higher)
-- npm (v8 or higher)
-- MongoDB Atlas account
-- Gmail account with App Password
-- Heroku account (for backend)
-- Netlify account (for frontend)
+## 🏗️ Architecture Overview
 
-### 1. Install Dependencies
-```bash
-# Install all dependencies (root, server, and client)
-npm run install-all
-```
+- **Backend API**: Node.js/Express (Deploy to Railway/Render)
+- **Public Website**: React (Deploy to Vercel)
+- **Admin Portal**: React (Deploy to Vercel)
 
-### 2. Environment Setup
+## 🚀 Step-by-Step Deployment
 
-#### Backend Environment Variables
-Create a `.env` file in the `server/` directory:
+### 1. Backend API Deployment (Railway - Recommended)
 
-```env
-# Database Configuration
-MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/growexi?retryWrites=true&w=majority
+#### Option A: Railway (Free tier available)
+1. **Sign up at [Railway.app](https://railway.app)**
+2. **Connect your GitHub repository**
+3. **Deploy the server folder**:
+   - Select "Deploy from GitHub repo"
+   - Choose your repository
+   - Set root directory to `/server`
+   - Add environment variables:
+     ```
+     NODE_ENV=production
+     PORT=5001
+     MONGO_URI=your_mongodb_atlas_uri
+     JWT_SECRET=your_strong_jwt_secret
+     EMAIL_USER=your_email@gmail.com
+     EMAIL_PASS=your_app_password
+     CLIENT_URL=https://your-client-domain.vercel.app
+     ```
 
-# Email Configuration
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-gmail-app-password
-EMAIL_RECIPIENT=info@growexi.rw
+#### Option B: Render (Alternative)
+1. **Sign up at [Render.com](https://render.com)**
+2. **Create a new Web Service**
+3. **Connect GitHub and select server folder**
+4. **Configure environment variables** (same as above)
 
-# Server Configuration
-PORT=5000
-NODE_ENV=development
+### 2. Public Website Deployment (Vercel)
 
-# CORS Configuration
-CLIENT_URL=http://localhost:3000
-```
-
-#### Frontend Environment Variables
-Create a `.env` file in the `client/` directory:
-
-```env
-VITE_API_URL=http://localhost:5000
-```
-
-### 3. MongoDB Atlas Setup
-
-1. Go to [MongoDB Atlas](https://www.mongodb.com/atlas)
-2. Create a free account and cluster
-3. Create a database user
-4. Whitelist your IP address (or use 0.0.0.0/0 for development)
-5. Get your connection string and update the `MONGO_URI` in your `.env` file
-
-### 4. Gmail App Password Setup
-
-1. Enable 2-Factor Authentication on your Gmail account
-2. Go to Google Account Settings > Security > App Passwords
-3. Generate an app password for "Mail"
-4. Use this password in your `EMAIL_PASS` environment variable
-
-### 5. Run Locally
-
-```bash
-# Start both frontend and backend
-npm run dev
-
-# Or start individually:
-npm run client  # Frontend only (port 3000)
-npm run server  # Backend only (port 5000)
-```
-
-## 🌐 Production Deployment
-
-### Backend Deployment (Heroku)
-
-1. **Install Heroku CLI**
+1. **Install Vercel CLI**:
    ```bash
-   # macOS
-   brew tap heroku/brew && brew install heroku
-   
-   # Or download from: https://devcenter.heroku.com/articles/heroku-cli
+   npm i -g vercel
    ```
 
-2. **Login to Heroku**
-   ```bash
-   heroku login
-   ```
-
-3. **Create Heroku App**
-   ```bash
-   cd server
-   heroku create growexi-api
-   ```
-
-4. **Set Environment Variables**
-   ```bash
-   heroku config:set MONGO_URI="your-mongodb-connection-string"
-   heroku config:set EMAIL_USER="your-email@gmail.com"
-   heroku config:set EMAIL_PASS="your-app-password"
-   heroku config:set EMAIL_RECIPIENT="info@growexi.rw"
-   heroku config:set NODE_ENV="production"
-   heroku config:set CLIENT_URL="https://your-frontend-url.netlify.app"
-   ```
-
-5. **Deploy**
-   ```bash
-   git add .
-   git commit -m "Deploy to Heroku"
-   git push heroku main
-   ```
-
-### Frontend Deployment (Netlify)
-
-1. **Build the Frontend**
+2. **Deploy from client directory**:
    ```bash
    cd client
-   npm run build
+   vercel
    ```
 
-2. **Deploy to Netlify**
-   - Go to [Netlify](https://netlify.com)
-   - Drag and drop the `client/dist` folder
-   - Or connect your GitHub repository
+3. **Configure environment variables**:
+   - `VITE_API_URL=https://your-backend-api-url.railway.app`
 
-3. **Set Environment Variables**
-   - In Netlify Dashboard > Site Settings > Environment Variables
-   - Add: `VITE_API_URL` = `https://your-heroku-app.herokuapp.com`
+4. **Or deploy via Vercel Dashboard**:
+   - Go to [vercel.com](https://vercel.com)
+   - Import your GitHub repository
+   - Set root directory to `/client`
+   - Add environment variable: `VITE_API_URL`
 
-4. **Custom Domain (Optional)**
-   - Add your custom domain in Netlify settings
-   - Update DNS records as instructed
+### 3. Admin Portal Deployment (Vercel)
 
-## 🔧 Production Checklist
+1. **Deploy from admin directory**:
+   ```bash
+   cd admin
+   vercel
+   ```
 
-### Backend Checklist
-- [ ] Environment variables set in Heroku
-- [ ] MongoDB connection working
-- [ ] Email service configured
-- [ ] CORS configured for production URL
-- [ ] Health check endpoint responding
+2. **Configure environment variables**:
+   - `VITE_API_URL=https://your-backend-api-url.railway.app`
 
-### Frontend Checklist
-- [ ] Environment variables set in Netlify
-- [ ] API URL pointing to production backend
-- [ ] Build successful
-- [ ] All images and assets loading
-- [ ] Contact form working
-- [ ] Responsive design tested
+3. **Or deploy via Vercel Dashboard**:
+   - Import your GitHub repository again
+   - Set root directory to `/admin`
+   - Add environment variable: `VITE_API_URL`
 
-### Security Checklist
-- [ ] Environment variables secured
-- [ ] CORS properly configured
-- [ ] Input validation in place
-- [ ] Error handling implemented
-- [ ] HTTPS enabled
+## 🔧 Environment Variables Setup
 
-## 🐛 Troubleshooting
+### Backend API (Railway/Render)
+```env
+NODE_ENV=production
+PORT=5001
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/growexi
+JWT_SECRET=your_very_strong_jwt_secret_here
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_gmail_app_password
+CLIENT_URL=https://your-client-domain.vercel.app
+```
 
-### Common Issues
+### Frontend Projects (Vercel)
+```env
+VITE_API_URL=https://your-backend-api-url.railway.app
+```
 
-1. **MongoDB Connection Error**
-   - Check your connection string
-   - Ensure IP is whitelisted
-   - Verify database user credentials
+## 📱 Quick Deployment Commands
 
-2. **Email Not Sending**
-   - Check Gmail app password
-   - Verify 2FA is enabled
-   - Check spam folder
+### Deploy All Frontend Projects
+```bash
+# Deploy public website
+cd client
+vercel --prod
 
-3. **CORS Errors**
-   - Update `CLIENT_URL` in backend environment
-   - Check frontend `VITE_API_URL` setting
+# Deploy admin portal
+cd ../admin
+vercel --prod
+```
 
-4. **Build Failures**
-   - Clear node_modules and reinstall
-   - Check Node.js version compatibility
-   - Verify all dependencies are installed
+### Update Environment Variables
+After deployment, update the environment variables in each platform:
+- **Railway/Render**: Backend environment variables
+- **Vercel**: Frontend environment variables
 
-### Performance Optimization
+## 🔗 Final URLs
 
-1. **Frontend**
-   - Enable gzip compression
-   - Optimize images
-   - Use CDN for static assets
-   - Implement lazy loading
+After deployment, you'll have:
+- **Public Website**: `https://your-client-domain.vercel.app`
+- **Admin Portal**: `https://your-admin-domain.vercel.app`
+- **Backend API**: `https://your-backend-api.railway.app`
 
-2. **Backend**
-   - Enable caching headers
-   - Implement rate limiting
-   - Use connection pooling
-   - Monitor performance
+## 🛠️ Post-Deployment Steps
+
+1. **Update CORS settings** in backend for production domains
+2. **Create admin user** in production database
+3. **Test all functionality** across all three applications
+4. **Configure custom domains** (optional)
+
+## 🔒 Security Considerations
+
+1. **Use strong JWT secrets** in production
+2. **Enable HTTPS** for all applications
+3. **Configure proper CORS** origins
+4. **Use environment variables** for all sensitive data
+5. **Regular database backups**
 
 ## 📊 Monitoring
 
-### Health Checks
-- Backend: `https://your-app.herokuapp.com/health`
-- Frontend: Check Netlify deployment status
+- **Railway/Render**: Built-in monitoring and logs
+- **Vercel**: Analytics and performance monitoring
+- **MongoDB Atlas**: Database monitoring
 
-### Analytics
-- Set up Google Analytics
-- Monitor form submissions
-- Track user engagement
+## 🆘 Troubleshooting
 
-## 🔄 Updates and Maintenance
+### Common Issues:
+1. **CORS errors**: Update CLIENT_URL in backend
+2. **API not found**: Check VITE_API_URL in frontend
+3. **Database connection**: Verify MONGO_URI
+4. **Email not working**: Check EMAIL_USER and EMAIL_PASS
 
-### Regular Updates
-- Keep dependencies updated
-- Monitor security vulnerabilities
-- Backup database regularly
-- Review and update content
+### Debug Commands:
+```bash
+# Check backend logs
+railway logs
 
-### Scaling Considerations
-- Database connection limits
-- Email service quotas
-- CDN usage
-- Server resources
+# Check frontend builds
+vercel logs
+
+# Test API endpoints
+curl https://your-backend-api.railway.app/health
+```
 
 ---
 
-## 📞 Support
-
-For technical support or questions:
-- Email: info@growexi.rw
-- Phone: +250 781184517
-
-**GROWEXI Rwanda** - Empowering 5,000 learners in 5 years
+**GROWEXI Rwanda** - Growing Rwanda's Opportunities & Workforce Expertise and Innovation

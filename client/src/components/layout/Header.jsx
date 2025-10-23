@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -22,16 +22,7 @@ const Header = () => {
     setIsMenuOpen(false)
   }
 
-  const navigate = useNavigate()
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
-  const userStr = typeof window !== 'undefined' ? localStorage.getItem('user') : null
-  const user = userStr ? JSON.parse(userStr) : null
-
-  const logout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
-    window.location.reload() // Refresh to reset header state
-  }
+  // No authentication needed for public website
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -64,12 +55,18 @@ const Header = () => {
               >
                 About
               </button>
-              <button
-                onClick={() => scrollToSection('services')}
+              <Link
+                to="/courses"
                 className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300"
               >
-                Services
-              </button>
+                Courses
+              </Link>
+              <Link
+                to="/announcements"
+                className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300"
+              >
+                Announcements
+              </Link>
               <button
                 onClick={() => scrollToSection('contact')}
                 className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300"
@@ -81,26 +78,11 @@ const Header = () => {
 
           {/* Right Controls */}
           <div className="hidden md:block">
-            {token && user ? (
-              <div className="flex items-center gap-4">
-                <span className="text-neutral-800 text-sm">Welcome, <span className="font-semibold">{user.name}</span></span>
-                {user.role === 'admin' && (
-                  <Link to="/admin/dashboard" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Dashboard</Link>
-                )}
-                <button onClick={logout} className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Logout</button>
-              </div>
-            ) : (
-              <div className="flex items-center gap-4">
-                <Link to="/login" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Login</Link>
-                <Link to="/signup" className="text-neutral-700 hover:text-primary-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Sign Up</Link>
-                <button
-                  onClick={() => scrollToSection('services')}
-                  className="btn-primary"
-                >
-                  Join a Program
-                </button>
-              </div>
-            )}
+            <div className="flex items-center gap-4">
+              <Link to="/courses" className="btn-primary">
+                Browse Courses
+              </Link>
+            </div>
           </div>
 
           {/* Mobile menu button */}
@@ -162,24 +144,30 @@ const Header = () => {
             >
               About
             </button>
-            <button
-              onClick={() => scrollToSection('services')}
+            <Link
+              to="/courses"
               className="text-neutral-700 hover:text-primary-600 block px-3 py-2 text-base font-medium w-full text-left"
             >
-              Services
-            </button>
+              Courses
+            </Link>
+            <Link
+              to="/announcements"
+              className="text-neutral-700 hover:text-primary-600 block px-3 py-2 text-base font-medium w-full text-left"
+            >
+              Announcements
+            </Link>
             <button
               onClick={() => scrollToSection('contact')}
               className="text-neutral-700 hover:text-primary-600 block px-3 py-2 text-base font-medium w-full text-left"
             >
               Contact
             </button>
-            <button
-              onClick={() => scrollToSection('services')}
-              className="btn-primary w-full mt-4"
+            <Link
+              to="/courses"
+              className="btn-primary w-full mt-4 text-center"
             >
-              Join a Program
-            </button>
+              Browse Courses
+            </Link>
           </div>
         </div>
       </nav>
