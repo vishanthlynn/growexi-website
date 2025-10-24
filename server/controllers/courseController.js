@@ -68,8 +68,11 @@ const getAllCoursesAdmin = async (req, res) => {
 // Admin: Create course
 const createCourse = async (req, res) => {
   try {
+    console.log('Creating course with data:', req.body);
+    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log('Validation errors:', errors.array());
       return res.status(400).json({
         success: false,
         message: 'Validation errors',
@@ -80,6 +83,7 @@ const createCourse = async (req, res) => {
     const course = new Course(req.body);
     await course.save();
     
+    console.log('Course created successfully:', course._id);
     res.status(201).json({
       success: true,
       data: course,
@@ -89,7 +93,8 @@ const createCourse = async (req, res) => {
     console.error('Error creating course:', error);
     res.status(500).json({
       success: false,
-      message: 'Error creating course'
+      message: 'Error creating course',
+      error: error.message
     });
   }
 };

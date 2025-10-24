@@ -65,6 +65,8 @@ const CoursesAdmin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
+      console.log('Submitting course data:', formData)
+      
       if (editingCourse) {
         await axios.put(getApiUrl(`/api/courses/admin/${editingCourse._id}`), formData)
       } else {
@@ -86,6 +88,8 @@ const CoursesAdmin = () => {
       fetchCourses()
     } catch (error) {
       console.error('Error saving course:', error)
+      console.error('Error response:', error.response?.data)
+      alert(`Error saving course: ${error.response?.data?.message || error.message}`)
     }
   }
 
