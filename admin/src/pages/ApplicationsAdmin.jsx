@@ -11,7 +11,7 @@ const ApplicationsAdmin = () => {
 
   const fetchApplications = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/applications/admin/all`)
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/applications/admin/all`)
       setApplications(response.data.data)
     } catch (error) {
       console.error('Error fetching applications:', error)
@@ -22,7 +22,7 @@ const ApplicationsAdmin = () => {
 
   const handleStatusChange = async (applicationId, newStatus) => {
     try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/api/applications/admin/${applicationId}/status`, {
+      await axios.put(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/applications/admin/${applicationId}/status`, {
         status: newStatus
       })
       fetchApplications()
@@ -34,7 +34,7 @@ const ApplicationsAdmin = () => {
   const handleDelete = async (applicationId) => {
     if (window.confirm('Are you sure you want to delete this application?')) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL}/api/applications/admin/${applicationId}`)
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/applications/admin/${applicationId}`)
         fetchApplications()
       } catch (error) {
         console.error('Error deleting application:', error)

@@ -18,8 +18,8 @@ const DashboardPage = () => {
   const fetchStats = async () => {
     try {
       const [coursesRes, applicationsRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_API_URL}/api/courses/admin/all`),
-        axios.get(`${import.meta.env.VITE_API_URL}/api/applications/admin/all`)
+        axios.get(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/courses/admin/all`),
+        axios.get(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/applications/admin/all`)
       ])
 
       const courses = coursesRes.data.data

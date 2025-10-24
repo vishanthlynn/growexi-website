@@ -23,7 +23,7 @@ const CoursesAdmin = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/courses/admin/all`)
+      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/courses/admin/all`)
       setCourses(response.data.data)
     } catch (error) {
       console.error('Error fetching courses:', error)
@@ -65,9 +65,9 @@ const CoursesAdmin = () => {
     e.preventDefault()
     try {
       if (editingCourse) {
-        await axios.put(`${import.meta.env.VITE_API_URL}/api/courses/admin/${editingCourse._id}`, formData)
+        await axios.put(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/courses/admin/${editingCourse._id}`, formData)
       } else {
-        await axios.post(`${import.meta.env.VITE_API_URL}/api/courses/admin`, formData)
+        await axios.post(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/courses/admin`, formData)
       }
       
       setShowForm(false)
@@ -106,7 +106,7 @@ const CoursesAdmin = () => {
   const handleDelete = async (courseId) => {
     if (window.confirm('Are you sure you want to delete this course?')) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL}/api/courses/admin/${courseId}`)
+        await axios.delete(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/courses/admin/${courseId}`)
         fetchCourses()
       } catch (error) {
         console.error('Error deleting course:', error)
