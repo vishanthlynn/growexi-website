@@ -80,7 +80,14 @@ const createCourse = async (req, res) => {
       });
     }
 
-    const course = new Course(req.body);
+    // Filter out empty strings from arrays
+    const courseData = {
+      ...req.body,
+      whatYoullLearn: req.body.whatYoullLearn.filter(item => item && item.trim() !== ''),
+      whoCanJoin: req.body.whoCanJoin.filter(item => item && item.trim() !== '')
+    };
+    
+    const course = new Course(courseData);
     await course.save();
     
     console.log('Course created successfully:', course._id);
@@ -111,9 +118,16 @@ const updateCourse = async (req, res) => {
       });
     }
 
+    // Filter out empty strings from arrays
+    const courseData = {
+      ...req.body,
+      whatYoullLearn: req.body.whatYoullLearn.filter(item => item && item.trim() !== ''),
+      whoCanJoin: req.body.whoCanJoin.filter(item => item && item.trim() !== '')
+    };
+    
     const course = await Course.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      courseData,
       { new: true, runValidators: true }
     );
     
