@@ -20,7 +20,7 @@ const courseValidation = [
   body('whatYoullLearn').isArray({ min: 1 }).withMessage('What you\'ll learn must be an array with at least 1 item'),
   body('whoCanJoin').isArray({ min: 1 }).withMessage('Who can join must be an array with at least 1 item'),
   body('outcome').trim().isLength({ min: 10 }).withMessage('Outcome must be at least 10 characters'),
-  body('courseMaterialsLink').isURL().withMessage('Course materials link must be a valid URL')
+  body('courseMaterialsLink').optional().isURL().withMessage('Course materials link must be a valid URL')
 ];
 
 // Public routes
