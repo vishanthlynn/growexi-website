@@ -42,9 +42,9 @@ const isLocalhostOrigin = (origin) => {
 
 app.use(cors({
   origin: function(origin, callback) {
-    console.log('CORS request from origin:', origin);
-    console.log('Allowed origins:', allowedOrigins);
-    console.log('CLIENT_URL env var:', process.env.CLIENT_URL);
+  console.log('🌐 CORS request from origin:', origin);
+  console.log('🌐 Allowed origins:', allowedOrigins);
+  console.log('🌐 CLIENT_URL env var:', process.env.CLIENT_URL);
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin) || isLocalhostOrigin(origin)) {
       console.log('CORS allowed for origin:', origin);
