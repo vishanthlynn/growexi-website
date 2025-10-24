@@ -20,7 +20,7 @@ Add these in Render dashboard:
 
 ```
 NODE_ENV=production
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/growexi
+MONGODB_URI=mongodb+srv://lynnvishanth:c6PwWlTUac3WdfbU@cluster0.fiyvrcn.mongodb.net/growexi?retryWrites=true&w=majority
 JWT_SECRET=your-super-secret-jwt-key-here-make-it-long-and-random
 CLIENT_URL=https://growexi.org
 EMAIL_USER=your-email@gmail.com

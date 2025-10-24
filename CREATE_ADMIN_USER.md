@@ -2,7 +2,7 @@
 
 ## Step 1: Set Production Database URI
 ```bash
-export MONGODB_URI="mongodb+srv://growexi-user:YOUR_PASSWORD@growexi-cluster.xxxxx.mongodb.net/growexi?retryWrites=true&w=majority"
+export MONGODB_URI="mongodb+srv://lynnvishanth:c6PwWlTUac3WdfbU@cluster0.fiyvrcn.mongodb.net/growexi?retryWrites=true&w=majority"
 ```
 
 ## Step 2: Run Admin Creation Script

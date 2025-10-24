@@ -51,7 +51,7 @@ This application consists of three separate projects:
    ```env
    NODE_ENV=development
    PORT=5001
-   MONGO_URI=mongodb://localhost:27017/growexi
+   MONGODB_URI=mongodb+srv://lynnvishanth:c6PwWlTUac3WdfbU@cluster0.fiyvrcn.mongodb.net/growexi?retryWrites=true&w=majority
    JWT_SECRET=your_jwt_secret_here
    EMAIL_USER=your_email@gmail.com
    EMAIL_PASS=your_app_password
