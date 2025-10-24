@@ -26,7 +26,8 @@ app.use(helmet());
 const allowedOrigins = [
   process.env.CLIENT_URL,
   'https://growexi.org',
-  'https://admin.growexi.org'
+  'https://admin.growexi.org',
+  'https://admin-atvtfqjf1-lynnvishanths-projects.vercel.app'
 ].filter(Boolean);
 const isLocalhostOrigin = (origin) => {
   try {
@@ -40,6 +41,7 @@ const isLocalhostOrigin = (origin) => {
 app.use(cors({
   origin: function(origin, callback) {
     console.log('CORS request from origin:', origin);
+    console.log('Allowed origins:', allowedOrigins);
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin) || isLocalhostOrigin(origin)) {
       console.log('CORS allowed for origin:', origin);
@@ -48,7 +50,9 @@ app.use(cors({
     console.log('CORS blocked for origin:', origin);
     return callback(new Error('Not allowed by CORS'));
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Logging middleware
@@ -93,6 +97,7 @@ app.use('*', (req, res) => {
 
 // Global error handler
 app.use((err, req, res, next) => {
+  
   console.error('Error:', err);
   res.status(500).json({
     success: false,
