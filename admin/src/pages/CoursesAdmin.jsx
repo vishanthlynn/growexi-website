@@ -89,7 +89,13 @@ const CoursesAdmin = () => {
     } catch (error) {
       console.error('Error saving course:', error)
       console.error('Error response:', error.response?.data)
-      alert(`Error saving course: ${error.response?.data?.message || error.message}`)
+      
+      if (error.response?.data?.errors) {
+        const errorMessages = error.response.data.errors.map(err => `${err.path}: ${err.msg}`).join('\n')
+        alert(`Validation errors:\n${errorMessages}`)
+      } else {
+        alert(`Error saving course: ${error.response?.data?.message || error.message}`)
+      }
     }
   }
 
