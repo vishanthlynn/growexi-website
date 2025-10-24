@@ -27,7 +27,9 @@ const allowedOrigins = [
   process.env.CLIENT_URL,
   'https://growexi.org',
   'https://admin.growexi.org',
-  'https://admin-atvtfqjf1-lynnvishanths-projects.vercel.app'
+  'https://admin-atvtfqjf1-lynnvishanths-projects.vercel.app',
+  'https://growexi-admin.vercel.app',
+  'https://admin.growexi.org'
 ].filter(Boolean);
 const isLocalhostOrigin = (origin) => {
   try {
@@ -42,6 +44,7 @@ app.use(cors({
   origin: function(origin, callback) {
     console.log('CORS request from origin:', origin);
     console.log('Allowed origins:', allowedOrigins);
+    console.log('CLIENT_URL env var:', process.env.CLIENT_URL);
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin) || isLocalhostOrigin(origin)) {
       console.log('CORS allowed for origin:', origin);
