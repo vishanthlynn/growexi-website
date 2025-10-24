@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { getApiUrl } from '../utils/api'
 
 const AnnouncementsAdmin = () => {
   const [announcements, setAnnouncements] = useState([])
@@ -18,7 +19,7 @@ const AnnouncementsAdmin = () => {
 
   const fetchAnnouncements = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/announcements`)
+      const response = await axios.get(getApiUrl('/api/announcements'))
       setAnnouncements(response.data.data)
     } catch (error) {
       console.error('Error fetching announcements:', error)
@@ -57,9 +58,9 @@ const AnnouncementsAdmin = () => {
       console.log('Axios headers:', axios.defaults.headers.common)
       
       if (editingAnnouncement) {
-          await axios.put(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/announcements/${editingAnnouncement._id}`, formData)
+          await axios.put(getApiUrl(`/api/announcements/${editingAnnouncement._id}`), formData)
       } else {
-        await axios.post(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/announcements`, formData)
+        await axios.post(getApiUrl('/api/announcements'), formData)
       }
       
       setShowForm(false)
@@ -91,7 +92,7 @@ const AnnouncementsAdmin = () => {
   const handleDelete = async (announcementId) => {
     if (window.confirm('Are you sure you want to delete this announcement?')) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/announcements/${announcementId}`)
+        await axios.delete(getApiUrl(`/api/announcements/${announcementId}`))
         fetchAnnouncements()
       } catch (error) {
         console.error('Error deleting announcement:', error)

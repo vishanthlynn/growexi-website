@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { getApiUrl } from '../utils/api'
 
 const DashboardPage = () => {
   const [stats, setStats] = useState({
@@ -18,8 +19,8 @@ const DashboardPage = () => {
   const fetchStats = async () => {
     try {
       const [coursesRes, applicationsRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/courses/admin/all`),
-        axios.get(`${import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com'}/api/applications/admin/all`)
+        axios.get(getApiUrl('/api/courses/admin/all')),
+        axios.get(getApiUrl('/api/applications/admin/all'))
       ])
 
       const courses = coursesRes.data.data
