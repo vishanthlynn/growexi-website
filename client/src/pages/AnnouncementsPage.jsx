@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer'
-
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5001'
+import { getApiUrl } from '../utils/api'
 
 export default function AnnouncementsPage() {
   const [items, setItems] = useState([])
@@ -11,7 +10,7 @@ export default function AnnouncementsPage() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/announcements`)
+        const res = await fetch(getApiUrl('/api/announcements'))
         const json = await res.json()
         if (!json.success) throw new Error(json.message || 'Failed to load')
         setItems(json.data)

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { getApiUrl } from '../utils/api'
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -74,7 +75,7 @@ const ContactSection = () => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5001'}/api/inquiries`,
+        getApiUrl('/api/inquiries'),
         formData
       )
 

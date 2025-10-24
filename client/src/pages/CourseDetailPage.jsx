@@ -4,6 +4,7 @@ import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer'
 import ApplicationModal from '../components/ApplicationModal'
 import axios from 'axios'
+import { getApiUrl } from '../utils/api'
 
 const CourseDetailPage = () => {
   const { id } = useParams()
@@ -18,7 +19,7 @@ const CourseDetailPage = () => {
 
   const fetchCourse = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/courses/${id}`)
+      const response = await axios.get(getApiUrl(`/api/courses/${id}`))
       setCourse(response.data.data)
     } catch (err) {
       setError('Course not found')

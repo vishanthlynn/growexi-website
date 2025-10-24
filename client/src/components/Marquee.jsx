@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5001'
+import { getApiUrl } from '../utils/api'
 
 export default function Marquee() {
   const [text, setText] = useState('')
@@ -8,7 +7,7 @@ export default function Marquee() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/announcements/marquee`)
+        const res = await fetch(getApiUrl('/api/announcements/marquee'))
         const json = await res.json()
         if (json.success && json.data) {
           setText(json.data.content || json.data.title)

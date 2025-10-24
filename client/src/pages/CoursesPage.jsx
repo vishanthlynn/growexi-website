@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer'
 import axios from 'axios'
+import { getApiUrl } from '../utils/api'
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState([])
@@ -15,7 +16,7 @@ const CoursesPage = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/courses`)
+      const response = await axios.get(getApiUrl('/api/courses'))
       setCourses(response.data.data)
     } catch (err) {
       setError('Failed to load courses')

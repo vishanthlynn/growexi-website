@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { getApiUrl } from '../utils/api'
 
 const ApplicationModal = ({ course, onClose }) => {
   const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ const ApplicationModal = ({ course, onClose }) => {
     setError(null)
 
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/applications`, {
+      await axios.post(getApiUrl('/api/applications'), {
         course: course._id,
         ...formData
       })
