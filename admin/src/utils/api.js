@@ -1,6 +1,6 @@
 // Utility function to construct API URLs properly - v2
 export const getApiUrl = (endpoint) => {
-  const baseUrl = import.meta.env.VITE_API_URL || 'https://growexi-api.onrender.com';
+  const baseUrl = import.meta.env.VITE_API_URL || 'https://growexi-website.onrender.com';
   console.log('🔍 Raw VITE_API_URL:', import.meta.env.VITE_API_URL);
   console.log('🔍 Base URL after fallback:', baseUrl);
   
