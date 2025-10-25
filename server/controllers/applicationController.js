@@ -14,7 +14,52 @@ const createTransporter = () => {
   });
 };
 
-// Send acceptance email
+// Send notification email to admin when new application is submitted
+const sendNotificationEmail = async (application, course) => {
+  try {
+    const transporter = createTransporter();
+    
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_RECIPIENT || 'info@growexi.rw',
+      subject: `New Course Application - ${course.title}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #2c5aa0;">New Course Application</h2>
+          <p>You have received a new application for a course.</p>
+          
+          <h3 style="color: #333; margin-top: 20px;">Course Details:</h3>
+          <p><strong>Course:</strong> ${course.title}</p>
+          
+          <h3 style="color: #333; margin-top: 20px;">Applicant Details:</h3>
+          <p><strong>Name:</strong> ${application.applicantName}</p>
+          <p><strong>Email:</strong> ${application.applicantEmail}</p>
+          
+          <h3 style="color: #333; margin-top: 20px;">Reason for Applying:</h3>
+          <p>${application.reasonForApplying}</p>
+          
+          <p style="margin-top: 30px;">
+            <a href="${process.env.CLIENT_URL || 'https://admin.growexi.org'}/applications" 
+               style="background-color: #2c5aa0; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+              View in Admin Portal
+            </a>
+          </p>
+          
+          <br>
+          <p>Best regards,<br>GROWEXI System</p>
+        </div>
+      `
+    };
+    
+    await transporter.sendMail(mailOptions);
+    console.log(`Notification email sent to admin about new application`);
+  } catch (error) {
+    console.error('Error sending notification email:', error);
+    // Don't throw error - email failure shouldn't block application submission
+  }
+};
+
+// Send acceptance email to student when application is accepted
 const sendAcceptanceEmail = async (application, course) => {
   try {
     const transporter = createTransporter();
@@ -58,6 +103,17 @@ const submitApplication = async (req, res) => {
 
     const application = new Application(req.body);
     await application.save();
+    
+    // Send notification email to admin
+    try {
+      const course = await Course.findById(req.body.course);
+      if (course) {
+        await sendNotificationEmail(application, course);
+      }
+    } catch (emailError) {
+      console.error('Error sending notification email:', emailError);
+      // Don't fail the request if email fails
+    }
     
     res.status(201).json({
       success: true,

@@ -112,9 +112,19 @@ const DashboardLayout = ({ children }) => {
         </div>
 
         {/* Page content */}
-        <main className="p-6">
+        <main className="p-6 pb-20">
           {children}
         </main>
+
+        {/* Footer */}
+        <footer className="bg-white border-t border-neutral-200 py-4 px-6">
+          <div className="text-center">
+            <p className="text-xs text-neutral-500">
+              Designed and Developed by{' '}
+              <span className="font-semibold text-neutral-700">Vishanth Dandu</span>
+            </p>
+          </div>
+        </footer>
       </div>
 
       {/* Overlay for mobile */}
