@@ -99,18 +99,6 @@ const DashboardLayout = ({ children }) => {
           </div>
         </div>
 
-        {/* API Connection Warning */}
-        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mx-6 mt-4">
-          <div className="flex">
-            <div className="ml-3">
-              <p className="text-sm text-yellow-700">
-                <strong>Development Mode:</strong> This admin portal is connected to your local development server. 
-                For production use, deploy the backend API to Railway, Render, or Heroku and update the VITE_API_URL environment variable.
-              </p>
-            </div>
-          </div>
-        </div>
-
         {/* Page content */}
         <main className="p-6 pb-20">
           {children}
