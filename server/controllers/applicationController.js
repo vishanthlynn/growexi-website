@@ -67,16 +67,19 @@ const sendAcceptanceEmail = async (application, course) => {
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: application.applicantEmail,
-      subject: `Congratulations! Your application for ${course.title} has been accepted`,
+      subject: `Congratulations! Your application for ${course.title} is accepted!`,
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #2c5aa0;">Congratulations!</h2>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <p>Dear ${application.applicantName},</p>
-          <p>Your application for <strong>${course.title}</strong> has been accepted!</p>
-          <p>You can access the course materials here: <a href="${course.courseMaterialsLink}" style="color: #2c5aa0;">${course.courseMaterialsLink}</a></p>
-          <p>We look forward to seeing you in the course!</p>
-          <br>
-          <p>Best regards,<br>GROWEXI Team</p>
+          <p>We are excited to inform you that your application for the course "<strong>${course.title}</strong>" has been accepted.</p>
+          <p>You can access all the course materials, including video links, at the private link below:</p>
+          <p style="margin: 20px 0;">
+            <a href="${course.courseMaterialsLink}" 
+               style="background-color: #2c5aa0; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block;">
+              Start Learning Now
+            </a>
+          </p>
+          <p>Best regards,<br>The GROWEXI Team</p>
         </div>
       `
     };
