@@ -37,15 +37,17 @@ const Header = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex items-center">
-            <button 
-              onClick={() => scrollToSection('home')}
+            <a 
+              href="https://growexi.org/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity duration-300"
             >
               <h1 className="text-2xl font-bold gradient-text">
                 GROWEXI
               </h1>
               <p className="text-xs text-neutral-600 -mt-1">Rwanda</p>
-            </button>
+            </a>
           </div>
 
           {/* Desktop Navigation */}
