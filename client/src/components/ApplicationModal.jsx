@@ -45,13 +45,19 @@ const ApplicationModal = ({ course, onClose }) => {
 
       const data = await response.json()
       
+      if (!response.ok) {
+        console.error('Cloudinary error:', data)
+        throw new Error(data.error?.message || 'Upload failed')
+      }
+      
       if (data.secure_url) {
         setScreenshotUrl(data.secure_url)
       } else {
-        throw new Error('Upload failed')
+        throw new Error('Upload failed: No URL returned')
       }
     } catch (err) {
-      setError('Failed to upload screenshot. Please try again.')
+      console.error('Upload error:', err)
+      setError(err.message || 'Failed to upload screenshot. Please try again.')
       setFile(null)
     } finally {
       setUploading(false)
