@@ -54,8 +54,8 @@ const AboutSection = () => {
               <p>
                 GROWEXI (Growing Rwanda's Opportunities & Workforce Expertise and Innovation) was founded to bridge the gap between education and market needs in Rwanda. Inspired by the country's Vision 2050, GROWEXI equips individuals with future-ready skills and practical knowledge that drive inclusive economic growth.
               </p>
-              <p>
-                The initiative was co-founded by <strong className="text-primary-600">Jean Claude Niyonsenga</strong> and <strong className="text-primary-600">Emmanuel Bigirimana</strong>, who share a passion for workforce development, innovation, and social impact.
+              <p className="text-lg font-semibold text-primary-600">
+                The initiative was co-founded by Jean Claude Niyonsenga and Emmanuel Bigirimana.
               </p>
               <p>
                 Through its inclusive approach, GROWEXI reaches underserved communities and creates opportunities for youth, women, and rural populations to thrive in Rwanda's knowledge-based economy.
