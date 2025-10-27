@@ -39,8 +39,6 @@ const Header = () => {
           <div className="flex items-center">
             <a 
               href="https://growexi.org/"
-              target="_blank"
-              rel="noopener noreferrer"
               className="flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity duration-300"
             >
               <h1 className="text-2xl font-bold gradient-text">
