@@ -30,6 +30,7 @@ const ApplicationModal = ({ course, onClose }) => {
     setUploading(true)
     setError(null)
 
+
     try {
       const formData = new FormData()
       formData.append('file', selectedFile)
