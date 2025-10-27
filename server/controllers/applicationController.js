@@ -179,6 +179,9 @@ const updateApplicationStatus = async (req, res) => {
     
     // Send email if status changed to Accepted
     if (status === 'Accepted' && oldStatus !== 'Accepted') {
+      console.log('📧 Sending acceptance email to:', application.applicantEmail);
+      console.log('📧 Applicant Name:', application.applicantName);
+      console.log('📧 Course:', application.course.title);
       await sendAcceptanceEmail(application, application.course);
     }
     

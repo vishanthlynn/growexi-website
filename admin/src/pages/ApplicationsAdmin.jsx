@@ -82,6 +82,7 @@ const ApplicationsAdmin = () => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase">Course</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase">Applicant</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase">Email</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase">Payment Proof</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase">Status</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase">Applied</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase">Actions</th>
@@ -100,6 +101,20 @@ const ApplicationsAdmin = () => {
                   </td>
                   <td className="px-6 py-4">
                     <div className="text-sm text-neutral-600">{application.applicantEmail}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    {application.paymentScreenshotUrl ? (
+                      <a 
+                        href={application.paymentScreenshotUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:text-blue-800 text-sm underline"
+                      >
+                        View Screenshot
+                      </a>
+                    ) : (
+                      <span className="text-sm text-neutral-400">No screenshot</span>
+                    )}
                   </td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(application.status)}`}>

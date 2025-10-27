@@ -8,6 +8,9 @@ const ApplicationModal = ({ course, onClose }) => {
     applicantEmail: '',
     reasonForApplying: ''
   })
+  const [file, setFile] = useState(null)
+  const [screenshotUrl, setScreenshotUrl] = useState(null)
+  const [uploading, setUploading] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(false)
@@ -19,15 +22,58 @@ const ApplicationModal = ({ course, onClose }) => {
     })
   }
 
+  const handleFileChange = async (e) => {
+    const selectedFile = e.target.files[0]
+    if (!selectedFile) return
+
+    setFile(selectedFile)
+    setUploading(true)
+    setError(null)
+
+    try {
+      const formData = new FormData()
+      formData.append('file', selectedFile)
+      formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'growexi_uploads')
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'your_cloud_name'}/image/upload`,
+        {
+          method: 'POST',
+          body: formData
+        }
+      )
+
+      const data = await response.json()
+      
+      if (data.secure_url) {
+        setScreenshotUrl(data.secure_url)
+      } else {
+        throw new Error('Upload failed')
+      }
+    } catch (err) {
+      setError('Failed to upload screenshot. Please try again.')
+      setFile(null)
+    } finally {
+      setUploading(false)
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+    
+    if (!screenshotUrl) {
+      setError('Please upload a payment screenshot')
+      return
+    }
+    
     setLoading(true)
     setError(null)
 
     try {
       await axios.post(getApiUrl('/api/applications'), {
         course: course._id,
-        ...formData
+        ...formData,
+        paymentScreenshotUrl: screenshotUrl
       })
 
       setSuccess(true)
@@ -133,6 +179,26 @@ const ApplicationModal = ({ course, onClose }) => {
               />
             </div>
 
+            <div>
+              <label htmlFor="paymentScreenshot" className="block text-sm font-medium text-neutral-700 mb-2">
+                Upload Payment Screenshot *
+              </label>
+              <input
+                type="file"
+                id="paymentScreenshot"
+                accept="image/*"
+                onChange={handleFileChange}
+                disabled={uploading}
+                className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+              />
+              {uploading && (
+                <p className="mt-2 text-sm text-blue-600">Uploading...</p>
+              )}
+              {screenshotUrl && (
+                <p className="mt-2 text-sm text-green-600">✅ Screenshot uploaded successfully</p>
+              )}
+            </div>
+
             <div className="flex gap-3 pt-4">
               <button
                 type="button"
@@ -143,7 +209,7 @@ const ApplicationModal = ({ course, onClose }) => {
               </button>
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || !screenshotUrl}
                 className="flex-1 btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Submitting...' : 'Submit Application'}

@@ -27,6 +27,10 @@ const applicationSchema = new mongoose.Schema({
     minlength: 10,
     maxlength: 1000
   },
+  paymentScreenshotUrl: {
+    type: String,
+    required: true
+  },
   status: {
     type: String,
     enum: ['Pending', 'Accepted', 'Rejected'],
