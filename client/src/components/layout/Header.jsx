@@ -39,12 +39,17 @@ const Header = () => {
           <div className="flex items-center">
             <a 
               href="https://growexi.org/"
-              className="flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity duration-300"
+              className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity duration-300"
             >
-              <h1 className="text-2xl font-bold gradient-text">
-                GROWEXI
-              </h1>
-              <p className="text-xs text-neutral-600 -mt-1">Rwanda</p>
+              <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">G</span>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold gradient-text">
+                  GROWEXI
+                </h1>
+                <p className="text-xs text-neutral-600 -mt-1">Rwanda</p>
+              </div>
             </a>
           </div>
 
