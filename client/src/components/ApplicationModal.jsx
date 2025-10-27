@@ -36,7 +36,7 @@ const ApplicationModal = ({ course, onClose }) => {
       formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'growexi_uploads')
 
       const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'your_cloud_name'}/image/upload`,
+        `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dvkecw8tw'}/image/upload`,
         {
           method: 'POST',
           body: formData
